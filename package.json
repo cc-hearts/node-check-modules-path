@@ -1,0 +1,21 @@
+{
+  "name": "node-deps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "bin": "./bin/rm.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-esm src/index.ts",
+    "rm": "ts-node-esm"
+  },
+  "keywords": [
+    "grep node_modules"
+  ],
+  "author": "heart",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^20.5.4"
+  }
+}
