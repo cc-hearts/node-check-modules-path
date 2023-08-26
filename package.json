@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "type": "module",
-  "bin": "./bin/rm.mjs",
+  "bin": {
+    "deps-analysis": "./bin/analysis.mjs",
+    "deps-rm": "./bin/rm.mjs"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-esm src/index.ts",
