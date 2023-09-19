@@ -5,8 +5,7 @@
   "main": "index.js",
   "type": "module",
   "bin": {
-    "deps-analysis": "./bin/analysis.mjs",
-    "deps-rm": "./bin/rm.mjs"
+    "deps-rm": "./bin/_rm.mjs"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
