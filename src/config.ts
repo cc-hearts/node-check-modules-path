@@ -1,7 +1,7 @@
 import { isMacOs } from "./validate.js"
 export const config = {
   // mac os
-  exclude: ['Library', 'Applications']
+  exclude: ['Library', 'Applications','app.asar.unpacked']
 }
 
 // 是否前缀有点

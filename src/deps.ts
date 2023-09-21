@@ -1,6 +1,8 @@
 import { readdir } from 'node:fs/promises'
 import { validateDirName } from './config.js'
 import { homedir } from 'os'
+import { findUpPkg } from '@cc-heart/utils-service'
+import { resolve } from 'node:path'
 
 // find all node modules in the current users home directory
 export const findNodeModules = async (path: string = homedir(), nodeModules: string[] = []): Promise<string[]> => {
@@ -22,4 +24,16 @@ export const findNodeModules = async (path: string = homedir(), nodeModules: str
   }
 
   return nodeModules
+}
+
+
+export async function getCurrentPath() {
+  const cwd = process.cwd()
+  let currentPath = await findUpPkg(cwd)
+  if (currentPath) {
+    currentPath = resolve(currentPath, '..')
+  } else {
+    currentPath = cwd
+  }
+  return currentPath
 }
