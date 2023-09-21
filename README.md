@@ -1,3 +1,3 @@
-# grep-deps
+# node-check-modules-path
 
-grep-deps is a tool for analyzing dependencies in the node_modules directory on your disk and generating them into a deps.json file. It also provides a command-line interface for conveniently removing these dependency projects.
+node-check-modules-path is a tool for analyzing dependencies in the node_modules directory on your disk and generating them into a deps.json file. It also provides a command-line interface for conveniently removing these dependency projects.

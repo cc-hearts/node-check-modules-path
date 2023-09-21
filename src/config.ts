@@ -4,12 +4,10 @@ export const config = {
   exclude: ['Library', 'Applications']
 }
 
-
 // 是否前缀有点
 export function isPrefixDot(path: string) {
   return path.startsWith('.')
 }
-
 
 export function validateDirName(dir: string) {
   if (isMacOs()) {
