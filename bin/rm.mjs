@@ -1,11 +1,12 @@
 import { readFile, rm } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { g as getCurrentPath } from './chunks/deps.js';
+import { a as getCurrentPath } from './chunks/deps.js';
 import 'os';
 import 'fs';
 import 'fs/promises';
 import 'url';
 import 'path';
+import 'node:child_process';
 
 async function rmRf(path) {
     return await rm(path, { recursive: true, force: true });

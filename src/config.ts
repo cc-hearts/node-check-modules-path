@@ -1,7 +1,11 @@
-import { isMacOs } from "./validate.js"
-export const config = {
-  // mac os
-  exclude: ['Library', 'Applications','app.asar.unpacked']
+import { isMacOs } from './validate.js'
+
+function getExcludeFileDir() {
+  if (isMacOs()) {
+    return ['Library', 'Applications', 'app.asar.unpacked']
+  }
+
+  return []
 }
 
 // 是否前缀有点
@@ -11,6 +15,7 @@ export function isPrefixDot(path: string) {
 
 export function validateDirName(dir: string) {
   if (isMacOs()) {
-    return !isPrefixDot(dir) && !config.exclude.includes(dir)
+    return !isPrefixDot(dir) && !getExcludeFileDir().includes(dir)
   }
+  return true
 }
