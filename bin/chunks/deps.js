@@ -5,23 +5,30 @@ import { stat } from 'fs/promises';
 import 'url';
 import { resolve } from 'path';
 import { resolve as resolve$1 } from 'node:path';
+import { exec } from 'node:child_process';
 
 function isMacOs() {
     return platform() === 'darwin';
 }
+function isWindow() {
+    return platform() === 'win32';
+}
 
-const config = {
-    // mac os
-    exclude: ['Library', 'Applications', 'app.asar.unpacked']
-};
+function getExcludeFileDir() {
+    if (isMacOs()) {
+        return ['Library', 'Applications', 'app.asar.unpacked'];
+    }
+    return [];
+}
 // 是否前缀有点
 function isPrefixDot(path) {
     return path.startsWith('.');
 }
 function validateDirName(dir) {
     if (isMacOs()) {
-        return !isPrefixDot(dir) && !config.exclude.includes(dir);
+        return !isPrefixDot(dir) && !getExcludeFileDir().includes(dir);
     }
+    return true;
 }
 
 async function isDirectory(path) {
@@ -75,20 +82,52 @@ const findNodeModules = async (path = homedir(), nodeModules = []) => {
         }
     }
     catch (e) {
-        // console.log('Error: ', e);
+        // console.log('findNodeModules catch error: ', e);
     }
     return nodeModules;
 };
 async function getCurrentPath() {
     const cwd = process.cwd();
-    let currentPath = await findUpPkg(cwd);
+    let currentPath = (await findUpPkg(cwd)) || cwd;
     if (currentPath) {
         currentPath = resolve$1(currentPath, '..');
     }
-    else {
-        currentPath = cwd;
-    }
     return currentPath;
 }
+async function getLogicalDiskOfWindows() {
+    return new Promise((resolve, reject) => {
+        exec('wmic logicaldisk get caption', (error, stdout, stderr) => {
+            if (error) {
+                reject(`Error while executing command: ${error.message}`);
+                return;
+            }
+            if (stderr) {
+                reject(`Command execution error: ${stderr}`);
+                return;
+            }
+            resolve(stdout
+                .trim()
+                .split('\r\r\n')
+                .slice(1)
+                .map((target) => target.trim()));
+        });
+    });
+}
+async function getNodeModulesDepsPath() {
+    if (isMacOs()) {
+        return await findNodeModules();
+    }
+    if (isWindow()) {
+        const drives = await getLogicalDiskOfWindows();
+        const task = drives.map(async (disk) => {
+            return await findNodeModules(disk);
+        });
+        return Promise.all(task).then((deps) => {
+            return deps.flat();
+        });
+    }
+    // TODO:
+    return [];
+}
 
-export { findNodeModules as f, getCurrentPath as g };
+export { getCurrentPath as a, getNodeModulesDepsPath as g };
