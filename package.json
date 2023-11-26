@@ -6,7 +6,8 @@
   "type": "module",
   "bin": {
     "deps-rm": "./bin/_rm.mjs",
-    "deps-analyze": "./bin/_analyze.mjs"
+    "deps-analyze": "./bin/_analyze.mjs",
+    "rm:deps": "node --loader ts-node/esm ./src/rm.ts"
   },
   "scripts": {
     "test": "vitest",
