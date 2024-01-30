@@ -8,8 +8,7 @@ export async function rmRf(path: string) {
 
 try {
   const currentPath = await getCurrentPath()
-  const depsPath = resolve(currentPath, '..', 'deps.json')
-  let dirs = await readFile(resolve(depsPath, 'deps.json'), 'utf8')
+  let dirs = await readFile(resolve(currentPath, 'deps.json'), 'utf8')
   dirs = JSON.parse(dirs)
   if (Array.isArray(dirs)) {
     for (const dir of dirs) {

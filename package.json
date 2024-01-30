@@ -1,19 +1,19 @@
 {
-  "name": "node-deps",
+  "name": "node-check-modules-path",
   "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
   "bin": {
     "deps-rm": "./bin/_rm.mjs",
-    "deps-analyze": "./bin/_analyze.mjs",
-    "rm:deps": "node --loader ts-node/esm ./src/rm.ts"
+    "deps-analyze": "./bin/_analyze.mjs"
   },
   "scripts": {
     "test": "vitest",
     "build": "rollup -c",
     "format": "npx prettier --write .",
-    "analysis": "node --loader ts-node/esm ./src/index.ts"
+    "analysis": "node --loader ts-node/esm ./src/index.ts",
+    "rm:deps": "node --loader ts-node/esm ./src/rm.ts"
   },
   "keywords": [
     "grep node_modules deps"
