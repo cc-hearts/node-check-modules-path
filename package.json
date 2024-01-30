@@ -18,7 +18,7 @@
   "keywords": [
     "grep node_modules deps"
   ],
-  "author": "cc heart",
+  "author": "Carl Chen",
   "license": "MIT",
   "dependencies": {
     "@cc-heart/utils-service": "^1.1.3"
