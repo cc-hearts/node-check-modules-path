@@ -70,7 +70,7 @@ export async function getNodeModulesDepsPath() {
   if (isWindow()) {
     const drives = await getLogicalDiskOfWindows()
     const task = drives.map(async (disk: string) => {
-      return await findNodeModules(disk)
+      return await findNodeModules(`${disk}/`)
     })
 
     return Promise.all(task).then((deps) => {

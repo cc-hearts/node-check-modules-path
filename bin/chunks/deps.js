@@ -18,6 +18,9 @@ function getExcludeFileDir() {
     if (isMacOs()) {
         return ['Library', 'Applications', 'app.asar.unpacked'];
     }
+    else if (isWindow()) {
+        return ['$RECYCLE.BIN'];
+    }
     return [];
 }
 // 是否前缀有点
@@ -25,7 +28,7 @@ function isPrefixDot(path) {
     return path.startsWith('.');
 }
 function validateDirName(dir) {
-    if (isMacOs()) {
+    if (isMacOs() || isWindow()) {
         return !isPrefixDot(dir) && !getExcludeFileDir().includes(dir);
     }
     return true;
@@ -120,7 +123,7 @@ async function getNodeModulesDepsPath() {
     if (isWindow()) {
         const drives = await getLogicalDiskOfWindows();
         const task = drives.map(async (disk) => {
-            return await findNodeModules(disk);
+            return await findNodeModules(`${disk}/`);
         });
         return Promise.all(task).then((deps) => {
             return deps.flat();

@@ -1,8 +1,10 @@
-import { isMacOs } from './validate.js'
+import { isMacOs, isWindow } from './validate.js'
 
 function getExcludeFileDir() {
   if (isMacOs()) {
     return ['Library', 'Applications', 'app.asar.unpacked']
+  } else if (isWindow()) {
+    return ['$RECYCLE.BIN']
   }
 
   return []
@@ -14,7 +16,7 @@ export function isPrefixDot(path: string) {
 }
 
 export function validateDirName(dir: string) {
-  if (isMacOs()) {
+  if (isMacOs() || isWindow()) {
     return !isPrefixDot(dir) && !getExcludeFileDir().includes(dir)
   }
   return true
